@@ -1,3 +1,5 @@
+import { ActionOptions } from "gadget-server";
+
 export const run = async (params: any, record: any, context: any) => {
   const { api, logger } = context;
   
@@ -257,4 +259,12 @@ export const run = async (params: any, record: any, context: any) => {
     logger.error("Error seeding data:", error);
     throw error;
   }
+};
+
+export const options: ActionOptions = {
+  actionType: "global",
+  triggers: {
+    onSuccess: true,
+    onFailure: true,
+  },
 }; 
