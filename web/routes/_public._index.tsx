@@ -1,19 +1,16 @@
 import { useState, useEffect } from "react";
+import Header from "../components/shared/Header";
+import Footer from "../components/shared/Footer";
+import HeroSection from "../components/shared/HeroSection";
+import EventCard from "../components/public/EventCard";
+import MusicianCard from "../components/public/MusicianCard";
+import VenueCard from "../components/public/VenueCard";
 
 export default function HomePage() {
   const [currentTime, setCurrentTime] = useState<string>("");
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     setCurrentTime(new Date().toLocaleString());
-  }, []);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % 3);
-    }, 5000); // Change image every 5 seconds
-
-    return () => clearInterval(interval);
   }, []);
 
   // Navigation handlers
@@ -31,28 +28,6 @@ export default function HomePage() {
     // Navigate to event details
     window.location.href = `/event/${eventId}`;
   };
-
-  // Hero images for rotator
-  const heroImages = [
-    {
-      id: 1,
-      url: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-      alt: "Live band performing on stage",
-      title: "Live Music Experience"
-    },
-    {
-      id: 2,
-      url: "https://images.unsplash.com/photo-1516280440614-37939bbacd81?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-      alt: "Jazz musician playing saxophone",
-      title: "Discover Amazing Talent"
-    },
-    {
-      id: 3,
-      url: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-      alt: "Crowd enjoying live music at venue",
-      title: "Connect Through Music"
-    }
-  ];
 
   // Mock data for demonstration
   const upcomingEvents = [
@@ -206,184 +181,9 @@ export default function HomePage() {
       background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
       fontFamily: 'system-ui, -apple-system, sans-serif'
     }}>
-      {/* Header */}
-      <header style={{
-        background: 'rgba(255, 255, 255, 0.95)',
-        backdropFilter: 'blur(10px)',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
-        position: 'sticky',
-        top: 0,
-        zIndex: 100
-      }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 1rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '70px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-              <div style={{
-                width: '2.5rem',
-                height: '2.5rem',
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                borderRadius: '0.75rem',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: 'white',
-                fontWeight: 'bold',
-                fontSize: '1.25rem'
-              }}>
-                🎵
-              </div>
-              <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1a202c', margin: 0 }}>
-                Live Local Beats
-              </h1>
-            </div>
-            <nav style={{ display: 'flex', gap: '2rem' }}>
-              <a href="#events" style={{ color: '#4a5568', textDecoration: 'none', fontWeight: '500' }}>Events</a>
-              <a href="#musicians" style={{ color: '#4a5568', textDecoration: 'none', fontWeight: '500' }}>Musicians</a>
-              <a href="#venues" style={{ color: '#4a5568', textDecoration: 'none', fontWeight: '500' }}>Venues</a>
-              <button style={{
-                padding: '0.5rem 1.5rem',
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                color: 'white',
-                border: 'none',
-                borderRadius: '0.5rem',
-                fontWeight: '600',
-                cursor: 'pointer'
-              }}>
-                Get Started
-              </button>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <Header />
 
-      {/* Hero Image Rotator */}
-      <section style={{ 
-        position: 'relative',
-        height: '60vh',
-        minHeight: '400px',
-        overflow: 'hidden'
-      }}>
-        {heroImages.map((image, index) => (
-          <div
-            key={image.id}
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              opacity: index === currentImageIndex ? 1 : 0,
-              transition: 'opacity 1s ease-in-out',
-              backgroundImage: `url(${image.url})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat'
-            }}
-          >
-            <div style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.7) 0%, rgba(118, 75, 162, 0.7) 100%)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              textAlign: 'center',
-              color: 'white'
-            }}>
-              <div style={{ maxWidth: '800px', padding: '0 2rem' }}>
-                <h1 style={{ 
-                  fontSize: '3.5rem', 
-                  fontWeight: 'bold', 
-                  marginBottom: '1rem',
-                  lineHeight: '1.2',
-                  textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
-                }}>
-                  {image.title}
-                </h1>
-                <p style={{ 
-                  fontSize: '1.25rem', 
-                  marginBottom: '2rem',
-                  opacity: 0.9,
-                  lineHeight: '1.6',
-                  textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
-                }}>
-                  The ultimate platform connecting musicians, venues, and music lovers
-                </p>
-                <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-                  <button style={{
-                    padding: '1rem 2rem',
-                    background: '#ffdf00',
-                    color: '#1a202c',
-                    border: 'none',
-                    borderRadius: '0.5rem',
-                    fontSize: '1.1rem',
-                    fontWeight: '600',
-                    cursor: 'pointer',
-                    boxShadow: '0 4px 14px rgba(255, 223, 0, 0.3)'
-                  }}>
-                    Find Events
-                  </button>
-                  <button style={{
-                    padding: '1rem 2rem',
-                    background: 'rgba(255, 255, 255, 0.2)',
-                    color: 'white',
-                    border: '2px solid rgba(255, 255, 255, 0.3)',
-                    borderRadius: '0.5rem',
-                    fontSize: '1.1rem',
-                    fontWeight: '600',
-                    cursor: 'pointer',
-                    backdropFilter: 'blur(10px)'
-                  }}>
-                    Join as Musician
-                  </button>
-                  <button style={{
-                    padding: '1rem 2rem',
-                    background: 'rgba(255, 255, 255, 0.2)',
-                    color: 'white',
-                    border: '2px solid rgba(255, 255, 255, 0.3)',
-                    borderRadius: '0.5rem',
-                    fontSize: '1.1rem',
-                    fontWeight: '600',
-                    cursor: 'pointer',
-                    backdropFilter: 'blur(10px)'
-                  }}>
-                    List Your Venue
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
-        
-        {/* Image indicators */}
-        <div style={{
-          position: 'absolute',
-          bottom: '2rem',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          display: 'flex',
-          gap: '0.5rem'
-        }}>
-          {heroImages.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentImageIndex(index)}
-              style={{
-                width: '12px',
-                height: '12px',
-                borderRadius: '50%',
-                border: 'none',
-                background: index === currentImageIndex ? '#ffdf00' : 'rgba(255, 255, 255, 0.5)',
-                cursor: 'pointer',
-                transition: 'background 0.3s ease'
-              }}
-            />
-          ))}
-        </div>
-      </section>
+      <HeroSection />
 
       {/* Upcoming Events Section */}
       <section id="events" style={{ 
@@ -417,68 +217,11 @@ export default function HomePage() {
             gap: '2rem'
           }}>
             {upcomingEvents.map(event => (
-              <div 
+              <EventCard 
                 key={event.id} 
-                onClick={() => handleEventClick(event.id)}
-                style={{
-                  background: 'white',
-                  borderRadius: '1rem',
-                  padding: '1.5rem',
-                  boxShadow: '0 10px 25px rgba(0, 0, 0, 0.1)',
-                  transition: 'transform 0.2s, box-shadow 0.2s',
-                  cursor: 'pointer',
-                  border: '1px solid rgba(0, 0, 0, 0.05)'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-4px)';
-                  e.currentTarget.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.15)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.1)';
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
-                  <div style={{
-                    fontSize: '2rem',
-                    marginRight: '1rem'
-                  }}>
-                    {event.image}
-                  </div>
-                  <div>
-                    <span style={{
-                      background: '#e2e8f0',
-                      color: '#4a5568',
-                      padding: '0.25rem 0.75rem',
-                      borderRadius: '1rem',
-                      fontSize: '0.875rem',
-                      fontWeight: '500'
-                    }}>
-                      {event.category}
-                    </span>
-                  </div>
-                </div>
-                <h3 style={{ 
-                  fontSize: '1.25rem', 
-                  fontWeight: '600', 
-                  color: '#1a202c',
-                  marginBottom: '0.5rem'
-                }}>
-                  {event.title}
-                </h3>
-                <p style={{ color: '#4a5568', marginBottom: '0.5rem', fontSize: '0.9rem' }}>
-                  <strong>{event.musician}</strong> at {event.venue}
-                </p>
-                <p style={{ color: '#718096', fontSize: '0.875rem', marginBottom: '0.5rem' }}>
-                  📅 {event.date}
-                </p>
-                <p style={{ color: '#718096', fontSize: '0.875rem', marginBottom: '0.5rem' }}>
-                  🕐 {event.startTime} - {event.endTime}
-                </p>
-                <p style={{ color: '#4a5568', fontSize: '0.875rem', fontStyle: 'italic' }}>
-                  {event.description}
-                </p>
-              </div>
+                event={event} 
+                onClick={handleEventClick}
+              />
             ))}
           </div>
         </div>
@@ -515,66 +258,11 @@ export default function HomePage() {
             gap: '2rem'
           }}>
             {featuredMusicians.map(musician => (
-              <div 
+              <MusicianCard 
                 key={musician.id} 
-                onClick={() => handleMusicianClick(musician.id)}
-                style={{
-                  background: 'rgba(255, 255, 255, 0.9)',
-                  backdropFilter: 'blur(10px)',
-                  borderRadius: '1rem',
-                  padding: '1.5rem',
-                  textAlign: 'center',
-                  border: '1px solid rgba(255, 255, 255, 0.3)',
-                  transition: 'transform 0.2s, box-shadow 0.2s',
-                  cursor: 'pointer'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-4px)';
-                  e.currentTarget.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.15)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = 'none';
-                }}
-              >
-                <div style={{
-                  width: '80px',
-                  height: '80px',
-                  borderRadius: '50%',
-                  margin: '0 auto 1rem',
-                  overflow: 'hidden',
-                  border: '3px solid #ffdf00',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
-                }}>
-                  <img 
-                    src={musician.profilePic} 
-                    alt={musician.name}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover'
-                    }}
-                  />
-                </div>
-                <h3 style={{ 
-                  fontSize: '1.25rem', 
-                  fontWeight: '600',
-                  marginBottom: '0.5rem',
-                  color: '#1a202c'
-                }}>
-                  {musician.name}
-                </h3>
-                <p style={{ 
-                  color: '#4a5568',
-                  marginBottom: '0.5rem'
-                }}>
-                  {musician.genre} • {musician.location}
-                </p>
-                <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', fontSize: '0.875rem', color: '#718096' }}>
-                  <span>⭐ {musician.rating}</span>
-                  <span>🎵 {musician.gigs} gigs</span>
-                </div>
-              </div>
+                musician={musician} 
+                onClick={handleMusicianClick}
+              />
             ))}
           </div>
         </div>
@@ -612,75 +300,11 @@ export default function HomePage() {
             gap: '2rem'
           }}>
             {featuredVenues.map(venue => (
-              <div 
+              <VenueCard 
                 key={venue.id} 
-                onClick={() => handleVenueClick(venue.id)}
-                style={{
-                  background: 'white',
-                  borderRadius: '1rem',
-                  padding: '1.5rem',
-                  boxShadow: '0 10px 25px rgba(0, 0, 0, 0.1)',
-                  transition: 'transform 0.2s, box-shadow 0.2s',
-                  cursor: 'pointer',
-                  border: '1px solid rgba(0, 0, 0, 0.05)'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-4px)';
-                  e.currentTarget.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.15)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.1)';
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
-                  <div style={{
-                    width: '60px',
-                    height: '60px',
-                    borderRadius: '50%',
-                    overflow: 'hidden',
-                    marginRight: '1rem',
-                    border: '2px solid #e2e8f0'
-                  }}>
-                    <img 
-                      src={venue.profilePic} 
-                      alt={venue.name}
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover'
-                      }}
-                    />
-                  </div>
-                  <div>
-                    <span style={{
-                      background: '#e2e8f0',
-                      color: '#4a5568',
-                      padding: '0.25rem 0.75rem',
-                      borderRadius: '1rem',
-                      fontSize: '0.875rem',
-                      fontWeight: '500'
-                    }}>
-                      {venue.type}
-                    </span>
-                  </div>
-                </div>
-                <h3 style={{ 
-                  fontSize: '1.25rem', 
-                  fontWeight: '600', 
-                  color: '#1a202c',
-                  marginBottom: '0.5rem'
-                }}>
-                  {venue.name}
-                </h3>
-                <p style={{ color: '#4a5568', marginBottom: '0.5rem' }}>
-                  {venue.location}
-                </p>
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.875rem', color: '#718096' }}>
-                  <span>Capacity: {venue.capacity}</span>
-                  <span>⭐ {venue.rating}</span>
-                </div>
-              </div>
+                venue={venue} 
+                onClick={handleVenueClick}
+              />
             ))}
           </div>
         </div>
@@ -737,51 +361,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer style={{ 
-        background: '#1a202c',
-        color: 'white',
-        padding: '3rem 1rem 2rem',
-        textAlign: 'center'
-      }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '2rem' }}>
-            <div style={{
-              width: '2rem',
-              height: '2rem',
-              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-              borderRadius: '0.5rem',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginRight: '0.75rem'
-            }}>
-              🎵
-            </div>
-            <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', margin: 0 }}>
-              Live Local Beats
-            </h3>
-          </div>
-          <p style={{ color: '#a0aec0', marginBottom: '2rem' }}>
-            Connecting musicians, venues, and music lovers since 2025
-          </p>
-          <div style={{ 
-            display: 'flex', 
-            justifyContent: 'center', 
-            gap: '2rem',
-            marginBottom: '2rem',
-            flexWrap: 'wrap'
-          }}>
-            <a href="#" style={{ color: '#a0aec0', textDecoration: 'none' }}>About</a>
-            <a href="#" style={{ color: '#a0aec0', textDecoration: 'none' }}>Contact</a>
-            <a href="#" style={{ color: '#a0aec0', textDecoration: 'none' }}>Privacy</a>
-            <a href="#" style={{ color: '#a0aec0', textDecoration: 'none' }}>Terms</a>
-          </div>
-          <p style={{ color: '#718096', fontSize: '0.875rem' }}>
-            © 2025 Live Local Beats. All rights reserved.
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
